@@ -22,7 +22,12 @@
  */
 package org.biojava.nbio.core.util;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Enumeration;
@@ -48,6 +53,9 @@ import java.util.zip.ZipFile;
  * <li>for any other extension, no compression is assumed </li>
  * </ul>
  *
+ * Note that  the cache option ( `biojava.cache.files` System Property),
+ * is not applied to Jar or Zip files; these are always read from File
+ * rather than the cached InputStream
  *
  * @author Andreas Prlic
  * @since 1.5
@@ -73,9 +81,14 @@ public class InputStreamProvider {
 		String prop = System.getProperty(CACHE_PROPERTY);
 		if ( prop != null && prop.equals("true")) {
 			cacheRawFiles = true;
-
 		}
+	}
 
+	/*
+	* Set whether caching is enabled
+	*/
+	void setCacheEnabled(boolean enabled) {
+		this.cacheRawFiles = enabled;
 	}
 
 	/**
@@ -163,19 +176,16 @@ public class InputStreamProvider {
 	 * @throws IOException
 	 */
 	public  InputStream getInputStream(File f)
-	throws IOException
-	{
+	throws IOException	{
 
 		// use the magic numbers to determine the compression type,
 		// use file extension only as 2nd choice
 
 		int magic = 0;
 
-
 		InputStream test = getInputStreamFromFile(f);
 		magic = getMagicNumber(test);
 		test.close();
-
 
 		InputStream inputStream = null;
 
@@ -195,7 +205,6 @@ public class InputStreamProvider {
 		}
 
 		else if ( fileName.endsWith(".zip")){
-
 			ZipFile zipfile = new ZipFile(f);
 
 			// stream to first entry is returned ...
@@ -207,7 +216,6 @@ public class InputStreamProvider {
 			} else {
 				throw new IOException ("Zip file has no entries");
 			}
-
 		}
 
 		else if ( fileName.endsWith(".jar")) {
@@ -228,11 +236,9 @@ public class InputStreamProvider {
 		else if ( fileName.endsWith(".Z")) {
 			// unix compressed
 			return openCompressedFile(f);
-
 		}
 
 		else {
-
 			// no particular extension found, assume that it is an uncompressed file
 			inputStream = getInputStreamFromFile(f);
 		}
