@@ -124,9 +124,8 @@ implements Ontology {
 	@Override
 	public Term createTerm(String name, String description)
 			throws
-			AlreadyExistsException,
+			AlreadyExistsException
 
-			IllegalArgumentException
 			{
 		throw new IllegalArgumentException(getName() + " is immutable");
 			}

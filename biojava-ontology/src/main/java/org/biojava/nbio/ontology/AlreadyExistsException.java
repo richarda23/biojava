@@ -31,8 +31,6 @@ package org.biojava.nbio.ontology;
 
 public class AlreadyExistsException extends OntologyException {
 
-
-
 	private static final long serialVersionUID = 1L;
 
 	public AlreadyExistsException() {
