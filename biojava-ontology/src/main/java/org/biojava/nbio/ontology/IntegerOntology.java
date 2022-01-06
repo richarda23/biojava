@@ -26,247 +26,233 @@ import org.biojava.nbio.ontology.utils.WeakValueHashMap;
 import java.util.*;
 
 
-
 /**
- *
- *
  * @author Matthew Pocock
  */
 public class IntegerOntology
 
-implements Ontology {
-	private final Map termCache;
+        implements Ontology {
+    private final Map termCache;
 
-	IntegerOntology() {
-		termCache = new WeakValueHashMap();
-	}
+    IntegerOntology() {
+        termCache = new WeakValueHashMap();
+    }
 
-	@Override
-	public String getName() {
-		return "core.integer";
-	}
+    @Override
+    public String getName() {
+        return "core.integer";
+    }
 
-	@Override
-	public String getDescription() {
-		return "Ontology containing all integers";
-	}
+    @Override
+    public String getDescription() {
+        return "Ontology containing all integers";
+    }
 
-	@Override
-	public void setDescription(String description){
-	}
+    @Override
+    public void setDescription(String description) {
+    }
 
-	@Override
-	public Set getTerms() {
-		return new AbstractSet() {
-			@Override
-			public boolean contains(Object o) {
-				return o instanceof IntTerm;
-			}
+    @Override
+    public Set getTerms() {
+        return new AbstractSet() {
+            @Override
+            public boolean contains(Object o) {
+                return o instanceof IntTerm;
+            }
 
-			@Override
-			public int size() {
-				return Integer.MAX_VALUE;
-			}
+            @Override
+            public int size() {
+                return Integer.MAX_VALUE;
+            }
 
-			@Override
-			public Iterator iterator() {
-				return new Iterator() {
-					int i = 0;
+            @Override
+            public Iterator iterator() {
+                return new Iterator() {
+                    int i = 0;
 
-					@Override
-					public boolean hasNext() {
-						return i > 0;
-					}
+                    @Override
+                    public boolean hasNext() {
+                        return i > 0;
+                    }
 
-					@Override
-					public Object next() {
-						if(!hasNext()){
-							throw new NoSuchElementException();
-						}
-						return resolveInt(i++);
-					}
+                    @Override
+                    public Object next() {
+                        if (!hasNext()) {
+                            throw new NoSuchElementException();
+                        }
+                        return resolveInt(i++);
+                    }
 
-					@Override
-					public void remove() {
-						throw new UnsupportedOperationException();
-					}
-				};
-			}
-		};
-	}
+                    @Override
+                    public void remove() {
+                        throw new UnsupportedOperationException();
+                    }
+                };
+            }
+        };
+    }
 
-	@Override
-	public Term getTerm(String s) throws NoSuchElementException {
-		int val = Integer.parseInt(s);
-		return resolveInt(val);
-	}
+    @Override
+    public Term getTerm(String s) throws NoSuchElementException {
+        int val = Integer.parseInt(s);
+        return resolveInt(val);
+    }
 
-	@Override
-	public Set getTriples(Term subject, Term object, Term predicate) {
-		return Collections.EMPTY_SET;
-	}
+    @Override
+    public Set getTriples(Term subject, Term object, Term predicate) {
+        return Collections.EMPTY_SET;
+    }
 
-	@Override
-	public OntologyOps getOps() {
-		return new DefaultOps() {
-			@Override
-			public Set getRemoteTerms() {
-				return Collections.EMPTY_SET;
-			}
-		};
-	}
+    @Override
+    public OntologyOps getOps() {
+        return new DefaultOps() {
+            @Override
+            public Set getRemoteTerms() {
+                return Collections.EMPTY_SET;
+            }
+        };
+    }
 
-	@Override
-	public Term createTerm(String name) throws AlreadyExistsException,  IllegalArgumentException {
-		throw new IllegalArgumentException(getName() + " is immutable");
-	}
+    @Override
+    public Term createTerm(String name) throws AlreadyExistsException, IllegalArgumentException {
+        throw new IllegalArgumentException(getName() + " is immutable");
+    }
 
-	@Override
-	public Term createTerm(String name, String description)
-			throws
-			AlreadyExistsException
+    @Override
+    public Term createTerm(String name, String description)
+            throws
+            AlreadyExistsException {
+        throw new IllegalArgumentException(getName() + " is immutable");
+    }
 
-			{
-		throw new IllegalArgumentException(getName() + " is immutable");
-			}
+    @Override
+    public Term createTerm(String name, String description, Object[] synonyms)
+            throws
+            AlreadyExistsException,
 
-	@Override
-	public Term createTerm(String name, String description, Object[] synonyms)
-			throws
-			AlreadyExistsException,
+            IllegalArgumentException {
+        throw new IllegalArgumentException(getName() + " is immutable");
+    }
 
-			IllegalArgumentException
-			{
-		throw new IllegalArgumentException(getName() + " is immutable");
-			}
+    @Override
+    public Variable createVariable(String name, String description)
+            throws
+            AlreadyExistsException,
 
-	@Override
-	public Variable createVariable(String name, String description)
-			throws
-			AlreadyExistsException,
+            IllegalArgumentException {
+        throw new IllegalArgumentException(getName() + " is immutable");
+    }
 
-			IllegalArgumentException
-			{
-		throw new IllegalArgumentException(getName() + " is immutable");
-			}
+    @Override
+    public Term importTerm(Term t, String name) {
+        throw new IllegalArgumentException(getName() + " is immutable");
+    }
 
-	@Override
-	public Term importTerm(Term t, String name)
+    @Override
+    public Triple createTriple(Term subject, Term object, Term predicate, String name, String description)
+            throws
+            AlreadyExistsException {
+        throw new IllegalArgumentException(getName() + " is immutable");
+    }
 
+    @Override
+    public boolean containsTriple(Term subject, Term object, Term predicate) {
+        return false;
+    }
 
-	{
-		throw new IllegalArgumentException(getName() + " is immutable");
-	}
+    @Override
+    public void deleteTerm(Term t) {
+        throw new RuntimeException(getName() + " is immutable");
+    }
 
-	@Override
-	public Triple createTriple(Term subject, Term object, Term predicate, String name, String description)
-			throws
-			AlreadyExistsException
-			{
-		throw new IllegalArgumentException(getName() + " is immutable");
-			}
+    @Override
+    public boolean containsTerm(String name) {
+        // uglee hack - perhaps we should use a regex?
+        try {
+            Integer.parseInt(name);
+        } catch (NumberFormatException e) {
+            return false;
+        }
 
-	@Override
-	public boolean containsTriple(Term subject, Term object, Term predicate) {
-		return false;
-	}
+        return true;
+    }
 
-	@Override
-	public void deleteTerm(Term t)  {
-		throw new RuntimeException(getName() + " is immutable");
-	}
+    public IntTerm resolveInt(int val) {
+        Integer i = new Integer(val);
+        IntTerm term = (IntTerm) termCache.get(i);
 
-	@Override
-	public boolean containsTerm(String name) {
-		// uglee hack - perhaps we should use a regex?
-		try {
-			Integer.parseInt(name);
-		} catch (NumberFormatException e) {
-			return false;
-		}
+        if (term == null) {
+            term = new IntTerm(val);
+            termCache.put(i, term);
+        }
 
-		return true;
-	}
+        return term;
+    }
 
-	public IntTerm resolveInt(int val) {
-		Integer i = new Integer(val);
-		IntTerm term = (IntTerm) termCache.get(i);
+    public final class IntTerm implements Term {
+        private final int val;
+        private Set synonyms;
 
-		if(term == null) {
-			term = new IntTerm(val);
-			termCache.put(i, term);
-		}
+        public IntTerm(int val) {
+            this(val, null);
+        }
 
-		return term;
-	}
+        public IntTerm(int val, Object[] synonyms) {
+            this.val = val;
 
-	public final class IntTerm
+            this.synonyms = new TreeSet();
+            if (synonyms != null) this.synonyms.addAll(Arrays.asList(synonyms));
+        }
 
-	implements Term {
-		private final int val;
-		private Set synonyms;
+        @Override
+        public void addSynonym(Object synonym) {
+            this.synonyms.add(synonym);
+        }
 
-		public IntTerm(int val) {
-			this(val, null);
-		}
+        @Override
+        public void removeSynonym(Object synonym) {
+            this.synonyms.remove(synonym);
+        }
 
-		public IntTerm(int val, Object[] synonyms) {
-			this.val = val;
+        @Override
+        public Object[] getSynonyms() {
+            return this.synonyms.toArray();
+        }
 
-			this.synonyms = new TreeSet();
-			if (synonyms!=null) this.synonyms.addAll(Arrays.asList(synonyms));
-		}
+        public int intValue() {
+            return val;
+        }
 
-		@Override
-		public void addSynonym(Object synonym) {
-			this.synonyms.add(synonym);
-		}
+        @Override
+        public String getName() {
+            return String.valueOf(val);
+        }
 
-		@Override
-		public void removeSynonym(Object synonym) {
-			this.synonyms.remove(synonym);
-		}
+        @Override
+        public String getDescription() {
+            return "The integer " + getName();
+        }
 
-		@Override
-		public Object[] getSynonyms() {
-			return this.synonyms.toArray();
-		}
+        @Override
+        public void setDescription(String description) {
+        }
 
-		public int intValue() {
-			return val;
-		}
+        @Override
+        public Ontology getOntology() {
+            return IntegerOntology.this;
+        }
 
-		@Override
-		public String getName() {
-			return String.valueOf(val);
-		}
+        @Override
+        public Annotation getAnnotation() {
+            return Annotation.EMPTY_ANNOTATION;
+        }
+    }
 
-		@Override
-		public String getDescription() {
-			return "The integer " + getName();
-		}
+    @Override
+    public void setName(String name) {
+        //ignore
 
-		@Override
-		public void setDescription(String description){
-
-		}
-
-		@Override
-		public Ontology getOntology() {
-			return IntegerOntology.this;
-		}
-
-		@Override
-		public Annotation getAnnotation() {
-			return Annotation.EMPTY_ANNOTATION;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		//ignore
-
-	}
+    }
 
 
 }
