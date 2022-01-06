@@ -52,7 +52,7 @@ public interface OntologyTerm extends Term {
 	 */
 
 	@Override
-	public Ontology getOntology();
+	Ontology getOntology();
 
 	/**
 	 * Simple in-memory implementation of a remote ontology term.

@@ -51,21 +51,21 @@ extends Term {
 	 * @return the subject term
 	 */
 
-	public Term getSubject();
+	Term getSubject();
 
 	/**
 	 * Return the object term of this triple.
 	 * @return the object term
 	 */
 
-	public Term getObject();
+	Term getObject();
 
 	/**
 	 * Return a Term which defines the type of relationship between the subject and object terms.
 	 * @return the predicate
 	 */
 
-	public Term getPredicate();
+	Term getPredicate();
 
 	/**
 	 * The hashcode for a Triple.
@@ -82,7 +82,7 @@ extends Term {
 	 * </p>
 	 */
 	@Override
-	public int hashCode();
+	int hashCode();
 
 	/**
 	 * Check to see if an object is an equivalent Triple.
@@ -105,7 +105,7 @@ extends Term {
 	 * </p>
 	 */
 	@Override
-	public boolean equals(Object obj);
+	boolean equals(Object obj);
 
 	/**
 	 * Basic in-memory implementation of a Triple in an ontology
@@ -114,7 +114,7 @@ extends Term {
 	 * @see org.biojavax.ontology.SimpleComparableTriple
 	 */
 
-	public static final class Impl
+	final class Impl
 
 	implements Triple, java.io.Serializable {
 		/**
@@ -182,7 +182,7 @@ extends Term {
 			this.name = name;
 			this.description = description;
 
-			this.synonyms = new TreeSet<Object>();
+			this.synonyms = new TreeSet<>();
 			if (synonyms!=null) this.synonyms.addAll(Arrays.asList(synonyms));
 		}
 
