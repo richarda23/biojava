@@ -16,7 +16,7 @@ size	is-a	positive-integer
 identity	is-a	equivalence
 
 # We need to be able to talk about the core object model so that we can plumb
-# magic in without making it totally obvious
+# magic in without making it totaly obvious
 #
 triple	is-a	any
 triple	has-a	source
@@ -33,7 +33,7 @@ aTriple	is-a	has-a
 (triple-term,aTriple,triple)	size	1
 
 # and for optimizers or just plain searching, we need to know a little about
-# what types of relationships could exist. Again, we've declared these things,
+# what types of relationships could exist. Again, we've decdlared these things,
 # but they probably need implementing in a hard-coded way somewhere
 #
 reflexive	is-a	relation

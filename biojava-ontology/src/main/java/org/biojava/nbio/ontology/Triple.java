@@ -44,8 +44,7 @@ import java.util.TreeSet;
  * @see org.biojavax.ontology.ComparableTriple
  */
 
-public interface Triple
-extends Term {
+public interface Triple extends Term {
 	/**
 	 * Return the subject term of this triple
 	 * @return the subject term

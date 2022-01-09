@@ -68,9 +68,9 @@ public class SmallAnnotation extends AbstractAnnotation {
 	}
 
 	/**
-	 * Return a new SmallAnnotation that copies all values from another annoation.
+	 * Return a new SmallAnnotation that copies all values from another annotation.
 	 *
-	 * @param ann  the Annoation to copy all values from
+	 * @param ann  the Annotation to copy all values from
 	 * @throws NullPointerException if ann is null
 	 */
 	public SmallAnnotation(Annotation ann) {

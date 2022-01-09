@@ -89,8 +89,7 @@ public class TabDelimParser {
 	 * @throws OntologyException if it was not possible to instantiate a new
 	 *         ontology
 	 */
-	public Ontology parse(BufferedReader in, OntologyFactory of)
-	throws IOException, OntologyException {
+	public Ontology parse(BufferedReader in, OntologyFactory of) throws IOException, OntologyException {
 		String name = "";
 		String description = "";
 		Ontology onto = null;

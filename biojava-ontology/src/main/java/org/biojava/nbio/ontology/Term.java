@@ -30,7 +30,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 
-
 /**
  * A term in an ontology.  This has an {@link org.biojava.nbio.Annotation Annotation}
  * which can be used for storing additional human-displayable information.  It
@@ -50,182 +49,186 @@ import java.util.TreeSet;
  *
  * @author Thomas Down
  * @author Matthew Pocock
- * @since 1.4
  * @see org.biojavax.ontology.ComparableTerm
+ * @since 1.4
  */
 
 public interface Term extends Annotatable {
-	/**
-	 * ChangeType which indicates that this term's ontology has been
-	 * altered
-	 */
+    /**
+     * ChangeType which indicates that this term's ontology has been
+     * altered
+     */
 
 
-	/**
-	 * Return the name of this term.
-	 * @return the name of the term
-	 */
+    /**
+     * Return the name of this term.
+     *
+     * @return the name of the term
+     */
 
-	String getName();
+    String getName();
 
-	/**
-	 * Return a human-readable description of this term, or the empty string if
-	 * none is available.
-	 * @return the description of the term
-	 */
+    /**
+     * Return a human-readable description of this term, or the empty string if
+     * none is available.
+     *
+     * @return the description of the term
+     */
 
-	String getDescription();
+    String getDescription();
 
-	/** set the description of the term;
-	 *
-	 * @param description
-	 *
-	 */
-	void setDescription(String description);
+    /**
+     * set the description of the term;
+     *
+     * @param description
+     */
+    void setDescription(String description);
 
-	/**
-	 * Return the ontology in which this term exists.
-	 * @return the ontology
-	 */
+    /**
+     * Return the ontology in which this term exists.
+     *
+     * @return the ontology
+     */
 
-	Ontology getOntology();
+    Ontology getOntology();
 
-	/**
-	 * Return the synonyms for this term.
-	 * @return the synonyms
-	 */
+    /**
+     * Return the synonyms for this term.
+     *
+     * @return the synonyms
+     */
 
-	Object[] getSynonyms();
+    Object[] getSynonyms();
 
-	/**
-	 * Add a synonym for this term.
-	 * @param synonym the synonym
-	 */
+    /**
+     * Add a synonym for this term.
+     *
+     * @param synonym the synonym
+     */
 
-	void addSynonym(Object synonym);
+    void addSynonym(Object synonym);
 
-	/**
-	 * Remove a synonym for this term.
-	 * @param synonym
-	 */
+    /**
+     * Remove a synonym for this term.
+     *
+     * @param synonym
+     */
 
-	void removeSynonym(Object synonym);
+    void removeSynonym(Object synonym);
 
-	/**
-	 * Simple in-memory implementation of an ontology term.
-	 * @see org.biojavax.ontology.SimpleComparableTerm
-	 * This can be used to implement Ontology.createTerm
-	 */
+    /**
+     * Simple in-memory implementation of an ontology term.
+     *
+     * @see org.biojavax.ontology.SimpleComparableTerm
+     * This can be used to implement Ontology.createTerm
+     */
 
-	class Impl extends AbstractTerm implements Term, java.io.Serializable {
-		/**
-		 *
-		 */
-		private static final long serialVersionUID = 6561668917514377417L;
+    class Impl extends AbstractTerm implements Term, java.io.Serializable {
+        /**
+         *
+         */
+        private static final long serialVersionUID = 6561668917514377417L;
 
-		private final String name;
+        private final String name;
 
-		private final Ontology ontology;
-		private Annotation annotation;
-		private Set<Object> synonyms;
+        private final Ontology ontology;
+        private Annotation annotation;
+        private Set<Object> synonyms;
 
-		public Impl(Ontology ontology, String name) {
-			this(ontology,name,null,null);
-		}
+        public Impl(Ontology ontology, String name) {
+            this(ontology, name, null, null);
+        }
 
-		public Impl(Ontology ontology, String name, String description) {
-			this(ontology,name,description,null);
-		}
+        public Impl(Ontology ontology, String name, String description) {
+            this(ontology, name, description, null);
+        }
 
-		public Impl(Ontology ontology, String name, String description, Object[] synonyms) {
-			if (name == null) {
-				throw new NullPointerException("Name must not be null");
-			}
-			// by AP - description can change from now on...
-			//if (description == null) {
-			//    throw new NullPointerException("Description must not be null");
-			//}
-			if (ontology == null) {
-				throw new NullPointerException("Ontology must not be null");
-			}
+        public Impl(Ontology ontology, String name, String description, Object[] synonyms) {
+            if (name == null) {
+                throw new NullPointerException("Name must not be null");
+            }
+            // by AP - description can change from now on...
+            //if (description == null) {
+            //    throw new NullPointerException("Description must not be null");
+            //}
+            if (ontology == null) {
+                throw new NullPointerException("Ontology must not be null");
+            }
 
-			this.name = name;
-			this.description = description;
-			this.ontology = ontology;
+            this.name = name;
+            this.description = description;
+            this.ontology = ontology;
 
-			this.synonyms = new TreeSet<Object>();
-			if (synonyms!=null) this.synonyms.addAll(Arrays.asList(synonyms));
-		}
+            this.synonyms = new TreeSet<>();
+            if (synonyms != null) this.synonyms.addAll(Arrays.asList(synonyms));
+        }
 
-		@Override
-		public void addSynonym(Object synonym) {
-			this.synonyms.add(synonym);
-		}
+        @Override
+        public void addSynonym(Object synonym) {
+            this.synonyms.add(synonym);
+        }
 
-		@Override
-		public void removeSynonym(Object synonym) {
-			this.synonyms.remove(synonym);
-		}
+        @Override
+        public void removeSynonym(Object synonym) {
+            this.synonyms.remove(synonym);
+        }
 
-		@Override
-		public Object[] getSynonyms() {
-			return this.synonyms.toArray();
-		}
+        @Override
+        public Object[] getSynonyms() {
+            return this.synonyms.toArray();
+        }
 
-		@Override
-		public String getName() {
-			return name;
-		}
+        @Override
+        public String getName() {
+            return name;
+        }
 
-		public void setAnnotation(Annotation annotation) {
-			this.annotation = annotation;
-		}
+        public void setAnnotation(Annotation annotation) {
+            this.annotation = annotation;
+        }
 
-		public void setSynonyms(Set<Object> synonyms) {
-			this.synonyms = synonyms;
-		}
+        public void setSynonyms(Set<Object> synonyms) {
+            this.synonyms = synonyms;
+        }
 
-		@Override
-		public String getDescription() {
-			return description;
-		}
+        @Override
+        public String getDescription() {
+            return description;
+        }
 
-		@Override
-		public Ontology getOntology() {
-			return ontology;
-		}
+        @Override
+        public Ontology getOntology() {
+            return ontology;
+        }
 
-		@Override
-		public String toString() {
-			return name;
-		}
+        @Override
+        public String toString() {
+            return name;
+        }
 
-		@Override
-		public Annotation getAnnotation() {
-			if (annotation == null) {
-				annotation = new SmallAnnotation();
-			}
-			return annotation;
-		}
+        @Override
+        public Annotation getAnnotation() {
+            if (annotation == null) {
+                annotation = new SmallAnnotation();
+            }
+            return annotation;
+        }
 
-	  @Override
-	public int hashCode() {
-		int value = 17;
-		if(getName() != null)
-		  value *= 31 * getName().hashCode();
-		return 17 * value;
-	  }
+        @Override
+        public int hashCode() {
+            int value = 17;
+            if (getName() != null)
+                value *= 31 * getName().hashCode();
+            return 17 * value;
+        }
 
-	  @Override
-	public boolean equals(Object obj)
-	  {
-		if(obj == this) return true;
-		if(!(obj instanceof Term)) return false;
-
-		Term that = (Term) obj;
-
-		return this.getOntology() == that.getOntology() &&
-				this.getName() == that.getName();
-	  }
-	}
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this) return true;
+            if (!(obj instanceof Term)) return false;
+            Term that = (Term) obj;
+            return this.getOntology() == that.getOntology() &&
+                    this.getName() == that.getName();
+        }
+    }
 }

@@ -237,9 +237,7 @@ public interface Ontology {
      */
     // AP: I am setting name and description to public changeable fields
     // e.g during parsing of an .obo file we don't know them when the ontology is instantiated
-    final class Impl
-
-            implements Ontology, java.io.Serializable {
+    final class Impl implements Ontology, java.io.Serializable {
         /**
          *
          */

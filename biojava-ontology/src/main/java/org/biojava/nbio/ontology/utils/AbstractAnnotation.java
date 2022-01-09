@@ -27,7 +27,7 @@ import java.util.*;
 
 /**
  * A utility class to ease the problem of implementing an Annotation to that of
- * providing an apropreate implementation of Map. Where possible implementations
+ * providing an appropriate implementation of Map. Where possible implementations
  *
  * This class is only intended as a way to implement
  * Annotation. If you are not trying to do that, then don't read on. If you
@@ -46,12 +46,7 @@ import java.util.*;
  *
  * @since 1.0
  */
-public abstract class AbstractAnnotation
-
-	implements
-		Annotation,
-		Serializable
-{
+public abstract class AbstractAnnotation implements Annotation, Serializable {
 	/**
 	 *
 	 */
@@ -95,23 +90,17 @@ public abstract class AbstractAnnotation
 	}
 
 	@Override
-	public void setProperty(Object key, Object value)
-	 {
-
+	public void setProperty(Object key, Object value)		{
 			getProperties().put(key, value);
-
 	}
 
 	@Override
 	public void removeProperty(Object key)
-		throws  NoSuchElementException
-	{
+		throws  NoSuchElementException {
 		if (!getProperties().containsKey(key)) {
 				throw new NoSuchElementException("Can't remove key " + key.toString());
 		}
-
-
-			getProperties().remove(key);
+		getProperties().remove(key);
 
 	}
 
