@@ -459,6 +459,9 @@ public interface Ontology {
 
         @Override
         public boolean containsTriple(Term subject, Term object, Term predicate) {
+            if (predicate == null || subject == null || predicate == null) {
+                throw new IllegalArgumentException("All terms must be non-null");
+            }
             if (!(subject.getOntology() == this)) return false;
             if (!(object.getOntology() == this)) return false;
             if (!(predicate.getOntology() == this)) return false;
