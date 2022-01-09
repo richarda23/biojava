@@ -113,9 +113,7 @@ public interface Triple extends Term {
 	 * @see org.biojavax.ontology.SimpleComparableTriple
 	 */
 
-	final class Impl
-
-	implements Triple, java.io.Serializable {
+	final class Impl implements Triple, java.io.Serializable {
 		/**
 		 *
 		 */
@@ -148,8 +146,7 @@ public interface Triple extends Term {
 				Term predicate,
 				String name,
 				String description,
-				Object[] synonyms)
-		{
+				Object[] synonyms) {
 			if (subject == null) {
 				throw new NullPointerException("Subject must not be null");
 			}
