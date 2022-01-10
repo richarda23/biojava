@@ -1,6 +1,7 @@
 package org.biojava.nbio.ontology;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,6 +43,36 @@ class OntologyTest {
         Triple triple2 = createAnyTriple("s2", "o2", "p2");
         assertTrue(anyOntology.containsTriple(triple.getSubject(), triple.getObject(), triple.getPredicate()));
         assertFalse(anyOntology.containsTriple(triple2.getSubject(), triple.getObject(), triple.getPredicate()));
+    }
+
+    @Test
+    void deleteTerm() throws AlreadyExistsException {
+        Term t = anyOntology.createTerm("t1");
+        assertTrue(anyOntology.containsTerm(t.getName()));
+        anyOntology.deleteTerm(t);
+        assertFalse(anyOntology.containsTerm(t.getName()));
+    }
+
+    @Test
+    @DisplayName("Delete triple keeps terms")
+    void deleteTriple() throws AlreadyExistsException {
+        Triple triple = createAnyTriple("s1" ,"o1", "p1");
+        assertTrue(anyOntology.containsTerm(triple.getName()));
+        anyOntology.deleteTerm(triple);
+        assertFalse(anyOntology.containsTerm(triple.getName()));
+        assertTrue(anyOntology.containsTerm(triple.getSubject().getName()));
+        assertTrue(anyOntology.containsTerm(triple.getObject().getName()));
+        assertTrue(anyOntology.containsTerm(triple.getPredicate().getName()));
+    }
+
+    @Test
+    @DisplayName("Deleting term keeps triple with that term")
+    void deleteTermFromTriple() throws AlreadyExistsException {
+        Triple triple = createAnyTriple("s1" ,"o1", "p1");
+        anyOntology.deleteTerm(triple.getSubject());
+        assertTrue(anyOntology.containsTerm(triple.getName()));
+        assertFalse(anyOntology.containsTerm(triple.getSubject().getName()));
+        assertEquals(1, anyOntology.getTriples(triple.getSubject(),null, null).size());
     }
 
     private Triple createAnyTriple(String subjectName, String objectName, String predName) throws AlreadyExistsException {

@@ -173,9 +173,9 @@ public interface Ontology {
      * Create a view of a term from another ontology.  If the requested term
      * has already been imported under that name, this method returns the existing
      * RemoteTerm object. If the term that is being imported is itself a
-     * RemoteTerm instance then first unwrap the term back to the orriginal
+     * RemoteTerm instance then first unwrap the term back to the original
      * term it represents and then produce a RemoteTerm from that. If the term
-     * being imported orriginated from this ontology, then return that term
+     * being imported originated from this ontology, then return that term
      * unaltered.
      *
      * @param t         the Term to import
